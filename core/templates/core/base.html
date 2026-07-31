@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>{% block title %}Sistema Django{% endblock %}</title>
+</head>
+<body>
+<header>
+<h1>Sistema da Bloom</h1>
+<nav>
+<a href="/">Início</a> |
+<a href="/roupas/">Estoque</a> |
+</nav>
+<hr>
+</header>
+<main>
+{% block content %}
+{% endblock %}
+</main>
+<footer>
+<hr>
+<p>Nada</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,28 @@
+{% extends 'core/base.html' %}
+{% block title %}Lista de Roupas{% endblock %}
+
+{% block content %}
+ <h2>Roupas cadastradas</h2>
+ <p><a href="/roupas/novo/">Cadastrar nova roupa</a></p>
+ 
+ {% if roupas %}
+     <ul>
+     {% for roupa in roupas %}
+         <li>
+             <a href="/roupas/{{ roupa.id }}/">{{ roupa.modelo }}</a>
+             
+             <!-- Formulário e Botão de Excluir -->
+             <form action="/roupas/{{ roupa.id }}/excluir/" method="POST" style="display:inline;">
+                 {% csrf_token %}
+                 <button type="submit" onclick="return confirm('Tem certeza que deseja excluir {{ roupa.modelo }}?');">
+                     Excluir
+                 </button>
+             </form>
+         </li>
+     {% endfor %}
+     </ul>
+ {% else %}
+     <p>Nenhuma roupa cadastrada ainda.</p>
+ {% endif %}
+
+{% endblock %}
