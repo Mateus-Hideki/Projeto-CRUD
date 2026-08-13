@@ -2,24 +2,24 @@
 {% block title %}Lista de Modelos{% endblock %}
 
 {% block content %}
- <h2>Modelos Cadastradas</h2>
- <p><a href="/modelo/novo">Cadastrar nova modelo</a></p>
+ <h2>Modelos Cadastrados</h2>
+ <p><a href="/modelos/novo">Cadastrar nova modelo</a></p>
  
- {% if roupas %}
+ {% if modelos %}
      <ul>
-     {% for roupa in roupas %}
+     {% for modelo in modelos %}
          <li>
-             <a href="/roupas/{{ roupa.id }}/">{{ roupa.modelo }}</a>
-             {% if roupa.quantidade > 0  %}
+             <a href="/modelos/{{ modelo.id }}/">{{ modelo.modelo }}</a>
+             {% if modelo.quantidade > 0  %}
                 - Disponível -
              {% else %}  
                 - Indisponível - 
              {% endif %}
 
              <!-- Formulário e Botão de Excluir -->
-             <form action="/roupas/{{ roupa.id }}/excluir/" method="POST" style="display:inline;">
+             <form action="/modelos/{{ modelo.id }}/excluir/" method="POST" style="display:inline;">
                  {% csrf_token %}
-                 <button type="submit" onclick="return confirm('Tem certeza que deseja excluir {{ roupa.modelo }}?');">
+                 <button type="submit" onclick="return confirm('Tem certeza que deseja excluir {{ modelo.modelo }}?');">
                      Excluir
                  </button>
              </form>
@@ -27,7 +27,7 @@
      {% endfor %}
      </ul>
  {% else %}
-     <p>Nenhuma roupa cadastrada ainda.</p>
+     <p>Nenhuma modelo cadastrado ainda.</p>
  {% endif %}
 
 {% endblock %}

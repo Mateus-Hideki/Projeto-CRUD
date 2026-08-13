@@ -3,23 +3,23 @@
 
 {% block content %}
  <h2>Categorias Cadastradas</h2>
- <p><a href="/categoria/novo">Cadastrar nova categoria</a></p>
+ <p><a href="/categorias/novo">Cadastrar nova categoria</a></p>
  
- {% if roupas %}
+ {% if categorias %}
      <ul>
-     {% for roupa in roupas %}
+     {% for categoria in categorias %}
          <li>
-             <a href="/roupas/{{ roupa.id }}/">{{ roupa.modelo }}</a>
-             {% if roupa.quantidade > 0  %}
+             <a href="/categorias/{{ categoria.id }}/">{{ categoria.categoria }}</a>
+             {% if categoria.quantidade > 0  %}
                 - Disponível -
              {% else %}  
                 - Indisponível - 
              {% endif %}
 
              <!-- Formulário e Botão de Excluir -->
-             <form action="/roupas/{{ roupa.id }}/excluir/" method="POST" style="display:inline;">
+             <form action="/categorias/{{ categoria.id }}/excluir/" method="POST" style="display:inline;">
                  {% csrf_token %}
-                 <button type="submit" onclick="return confirm('Tem certeza que deseja excluir {{ roupa.modelo }}?');">
+                 <button type="submit" onclick="return confirm('Tem certeza que deseja excluir {{ categoria.categoria }}?');">
                      Excluir
                  </button>
              </form>
@@ -27,7 +27,7 @@
      {% endfor %}
      </ul>
  {% else %}
-     <p>Nenhuma roupa cadastrada ainda.</p>
+     <p>Nenhuma categoria cadastrada ainda.</p>
  {% endif %}
 
 {% endblock %}
