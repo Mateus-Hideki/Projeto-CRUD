@@ -10,11 +10,15 @@
      {% for roupa in roupas %}
          <li>
              <a href="/roupas/{{ roupa.id }}/">{{ roupa.modelo }}</a>
+             
+             - {{ roupa.tamanho }}
+
              {% if roupa.quantidade > 0  %}
                 - Disponível -
              {% else %}  
                 - Indisponível - 
              {% endif %}
+
 
              <!-- Formulário e Botão de Excluir -->
              <form action="/roupas/{{ roupa.id }}/excluir/" method="POST" style="display:inline;">
