@@ -10,11 +10,6 @@
      {% for categoria in categorias %}
          <li>
              <a href="/categorias/{{ categoria.id }}/">{{ categoria.categoria }}</a>
-             {% if categoria.quantidade > 0  %}
-                - Disponível -
-             {% else %}  
-                - Indisponível - 
-             {% endif %}
 
              <!-- Formulário e Botão de Excluir -->
              <form action="/categorias/{{ categoria.id }}/excluir/" method="POST" style="display:inline;">

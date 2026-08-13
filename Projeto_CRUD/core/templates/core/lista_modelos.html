@@ -10,11 +10,6 @@
      {% for modelo in modelos %}
          <li>
              <a href="/modelos/{{ modelo.id }}/">{{ modelo.modelo }}</a>
-             {% if modelo.quantidade > 0  %}
-                - Disponível -
-             {% else %}  
-                - Indisponível - 
-             {% endif %}
 
              <!-- Formulário e Botão de Excluir -->
              <form action="/modelos/{{ modelo.id }}/excluir/" method="POST" style="display:inline;">
