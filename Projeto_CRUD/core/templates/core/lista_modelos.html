@@ -1,28 +1,48 @@
 {% extends 'core/base.html' %}
-{% block title %}Lista de Modelos{% endblock %}
+
+{% block title %}Modelos | Projeto CRUD{% endblock %}
 
 {% block content %}
- <h2>Modelos Cadastrados</h2>
- <p><a href="/modelos/novo">Cadastrar nova modelo</a></p>
- 
- {% if modelos %}
-     <ul>
-     {% for modelo in modelos %}
-         <li>
-             <a href="/modelos/{{ modelo.id }}/">{{ modelo.modelo }}</a>
+<section class="page-shell">
+  <div class="page-header">
+    <div>
+      <p class="section-kicker">Cadastro de modelos</p>
+      <h1>Modelos</h1>
+    </div>
+    <a href="/modelos/novo/" class="btn-primary">Novo modelo</a>
+  </div>
 
-             <!-- Formulário e Botão de Excluir -->
-             <form action="/modelos/{{ modelo.id }}/excluir/" method="POST" style="display:inline;">
-                 {% csrf_token %}
-                 <button type="submit" onclick="return confirm('Tem certeza que deseja excluir {{ modelo.modelo }}?');">
-                     Excluir
-                 </button>
-             </form>
-         </li>
-     {% endfor %}
-     </ul>
- {% else %}
-     <p>Nenhuma modelo cadastrado ainda.</p>
- {% endif %}
-
+  {% if modelos %}
+  <div class="table-wrap panel-soft">
+    <table>
+      <thead>
+        <tr>
+          <th>Modelo</th>
+          <th>Categoria</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for modelo in modelos %}
+        <tr>
+          <td>{{ modelo.modelo }}</td>
+          <td>{{ modelo.categoria }}</td>
+          <td class="row-actions">
+            <div class="row-action-group">
+              <a href="/modelos/{{ modelo.id }}/editar/" class="btn-edit"><span class="action-icon">✎</span>Editar</a>
+              <form action="/modelos/{{ modelo.id }}/excluir/" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn-danger" onclick="return confirm('Tem certeza que deseja excluir {{ modelo.modelo }}?');"><span class="action-icon">⌫</span>Excluir</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">Nenhum modelo cadastrado ainda.</div>
+  {% endif %}
+</section>
 {% endblock %}

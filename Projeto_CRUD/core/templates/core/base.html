@@ -1,27 +1,57 @@
-<!DOCTYPE html>
+{% load static %}
+<!doctype html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<title>{% block title %}Sistema Django{% endblock %}</title>
-</head>
-<body>
-<header>
-<h1>Sistema da Bloom</h1>
-<nav>
-<a href="/">Início</a> |
-<a href="/roupas/">Estoque</a> |
-<a href="/modelos/">Modelos</a> |
-<a href="/categorias/">Categorias</a>
-</nav>
-<hr>
-</header>
-<main>
-{% block content %}
-{% endblock %}
-</main>
-<footer>
-<hr>
-<p>Nada</p>
-</footer>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Noir Studio{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'core/css/styles.css' %}" />
+  </head>
+  <body>
+    {% if messages %}
+    <div class="toast-stack" aria-live="polite" aria-atomic="true">
+      {% for message in messages %}
+      <div class="toast toast-{{ message.tags|default:'info' }}">
+        <span class="toast-icon"></span>
+        <span class="toast-text">{{ message }}</span>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <header class="site-header">
+      <div class="container nav-wrap">
+        <a href="/" class="brand">Noir</a>
+        <nav class="main-nav" aria-label="Menu principal">
+          <a href="/" class="nav-link"><span class="nav-icon">⌂</span>Início</a>
+          <a href="/roupas/" class="nav-link"><span class="nav-icon">◫</span>Roupas</a>
+          <a href="/modelos/" class="nav-link"><span class="nav-icon">◌</span>Modelos</a>
+          <a href="/categorias/" class="nav-link"><span class="nav-icon">◍</span>Categorias</a>
+        </nav>
+        <a href="/roupas/novo/" class="nav-action"><span class="nav-icon">＋</span>Cadastrar peça</a>
+      </div>
+    </header>
+
+    <main class="main-content">{% block content %} {% endblock %}</main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div>
+          <div class="footer-brand">Noir</div>
+          <p>Estilo essencial para o dia a dia.</p>
+        </div>
+        <div>© 2026 Noir Studio</div>
+      </div>
+    </footer>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const toasts = document.querySelectorAll('.toast');
+        toasts.forEach((toast, index) => {
+          setTimeout(() => toast.classList.add('show'), index * 120);
+          setTimeout(() => toast.classList.add('hide'), 3200 + index * 120);
+        });
+      });
+    </script>
+  </body>
 </html>

@@ -1,10 +1,23 @@
 {% extends 'core/base.html' %}
-{% block title %}Criar Categoria{% endblock %}
+
+{% block title %}Nova categoria{% endblock %}
+
 {% block content %}
- <h2>Criar Categoria</h2>
- <form method="post">
- {% csrf_token %}
- {{ form.as_p }}
- <button type="submit">Salvar</button>
- </form>
+<section class="form-shell">
+  <div class="form-card">
+    <div class="form-header">
+      <div>
+        <p class="section-kicker">Categorias</p>
+        <h2>{% if editando %}Editar categoria{% else %}Nova categoria{% endif %}</h2>
+      </div>
+      <a href="/categorias/" class="btn-ghost">Voltar</a>
+    </div>
+
+    <form method="post" class="styled-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn-primary">{% if editando %}Salvar alterações{% else %}Salvar categoria{% endif %}</button>
+    </form>
+  </div>
+</section>
 {% endblock %}

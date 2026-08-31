@@ -1,4 +1,83 @@
 {% extends 'core/base.html' %}
-{% block title %}Página Inicial{% endblock %}
+
+{% block title %}Dashboard | Projeto CRUD{% endblock %}
+
 {% block content %}
+<section class="dashboard-shell">
+  <div class="dashboard-header">
+    <div>
+      <p class="section-kicker">Painel administrativo</p>
+      <h1>Controle da loja</h1>
+    </div>
+    <a href="/roupas/novo/" class="btn-primary"><span class="nav-icon">＋</span>Cadastrar nova peça</a>
+  </div>
+
+  <div class="stats-grid">
+    <article class="stat-card accent">
+      <div class="stat-topline"><span class="stat-icon">◫</span><span>Total de peças</span></div>
+      <strong>{{ total_roupas }}</strong>
+      <small>Disponíveis no estoque</small>
+    </article>
+    <article class="stat-card">
+      <div class="stat-topline"><span class="stat-icon">◌</span><span>Modelos</span></div>
+      <strong>{{ total_modelos }}</strong>
+      <small>Linhas cadastradas</small>
+    </article>
+    <article class="stat-card">
+      <div class="stat-topline"><span class="stat-icon">◍</span><span>Categorias</span></div>
+      <strong>{{ total_categorias }}</strong>
+      <small>Grupos de coleção</small>
+    </article>
+  </div>
+
+  <div class="dashboard-grid">
+    <section class="panel panel-large">
+      <div class="panel-header">
+        <h2>Últimos cadastros</h2>
+        <a href="/roupas/">Ver estoque</a>
+      </div>
+
+      {% if ultimas_roupas %}
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Peça</th>
+                <th>Categoria</th>
+                <th>Cor</th>
+                <th>Tamanho</th>
+                <th>Qtd.</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for roupa in ultimas_roupas %}
+              <tr>
+                <td>{{ roupa.modelo }}</td>
+                <td>{{ roupa.categoria }}</td>
+                <td>{{ roupa.cor }}</td>
+                <td>{{ roupa.tamanho }}</td>
+                <td>{{ roupa.quantidade }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% else %}
+        <div class="empty-state">Ainda não há peças cadastradas.</div>
+      {% endif %}
+    </section>
+
+    <aside class="panel">
+      <div class="panel-header">
+        <h2>Ações rápidas</h2>
+      </div>
+      <div class="action-list">
+        <a href="/roupas/novo/">Cadastrar peça</a>
+        <a href="/roupas/">Listar peças</a>
+        <a href="/modelos/novo/">Cadastrar modelo</a>
+        <a href="/categorias/novo/">Cadastrar categoria</a>
+      </div>
+    </aside>
+  </div>
+</section>
 {% endblock %}

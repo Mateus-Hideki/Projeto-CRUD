@@ -14,11 +14,11 @@ class Modelo(models.Model):
         return self.modelo
 
 class Roupa(models.Model):
-    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True)
-    modelo = models.ForeignKey(Modelo, on_delete=models.SET_NULL, null=True)
+    categoria = models.ForeignKey(Categoria, on_delete=models.SET_NULL, null=True, blank=True)
+    modelo = models.ForeignKey(Modelo, on_delete=models.SET_NULL, null=True, blank=True)
     cor = models.CharField(max_length=150)
     tamanho = models.CharField(max_length=10)
     quantidade = models.IntegerField(default=1)
     
     def __str__(self):
-        return self.modelo
+        return str(self.modelo) if self.modelo else f'Roupa {self.pk}'

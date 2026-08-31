@@ -1,28 +1,46 @@
 {% extends 'core/base.html' %}
-{% block title %}Lista de Categorias{% endblock %}
+
+{% block title %}Categorias | Projeto CRUD{% endblock %}
 
 {% block content %}
- <h2>Categorias Cadastradas</h2>
- <p><a href="/categorias/novo">Cadastrar nova categoria</a></p>
- 
- {% if categorias %}
-     <ul>
-     {% for categoria in categorias %}
-         <li>
-             <a href="/categorias/{{ categoria.id }}/">{{ categoria.categoria }}</a>
+<section class="page-shell">
+  <div class="page-header">
+    <div>
+      <p class="section-kicker">Cadastro de categorias</p>
+      <h1>Categorias</h1>
+    </div>
+    <a href="/categorias/novo/" class="btn-primary">Nova categoria</a>
+  </div>
 
-             <!-- Formulário e Botão de Excluir -->
-             <form action="/categorias/{{ categoria.id }}/excluir/" method="POST" style="display:inline;">
-                 {% csrf_token %}
-                 <button type="submit" onclick="return confirm('Tem certeza que deseja excluir {{ categoria.categoria }}?');">
-                     Excluir
-                 </button>
-             </form>
-         </li>
-     {% endfor %}
-     </ul>
- {% else %}
-     <p>Nenhuma categoria cadastrada ainda.</p>
- {% endif %}
-
+  {% if categorias %}
+  <div class="table-wrap panel-soft">
+    <table>
+      <thead>
+        <tr>
+          <th>Categoria</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for categoria in categorias %}
+        <tr>
+          <td>{{ categoria.categoria }}</td>
+          <td class="row-actions">
+            <div class="row-action-group">
+              <a href="/categorias/{{ categoria.id }}/editar/" class="btn-edit"><span class="action-icon">✎</span>Editar</a>
+              <form action="/categorias/{{ categoria.id }}/excluir/" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn-danger" onclick="return confirm('Tem certeza que deseja excluir {{ categoria.categoria }}?');"><span class="action-icon">⌫</span>Excluir</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">Nenhuma categoria cadastrada ainda.</div>
+  {% endif %}
+</section>
 {% endblock %}

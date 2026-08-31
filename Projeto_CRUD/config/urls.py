@@ -14,10 +14,18 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path, re_path
+from django.views.static import serve
+
+from core.views import react_frontend
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
+    re_path(r'^assets/(?P<path>.*)$', serve, {'document_root': settings.BASE_DIR.parent / 'frontend' / 'dist' / 'assets'}),
+    re_path(r'^favicon\.svg$', serve, {'document_root': settings.BASE_DIR.parent / 'frontend' / 'dist'}),
+    re_path(r'^icons\.svg$', serve, {'document_root': settings.BASE_DIR.parent / 'frontend' / 'dist'}),
+    re_path(r'^(?!admin/|roupas/|modelos/|categorias/).*$', react_frontend),
 ]

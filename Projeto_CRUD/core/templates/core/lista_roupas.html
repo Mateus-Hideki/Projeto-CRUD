@@ -1,37 +1,62 @@
 {% extends 'core/base.html' %}
-{% block title %}Lista de Roupas{% endblock %}
+
+{% block title %}Estoque | Projeto CRUD{% endblock %}
 
 {% block content %}
- <h2>Roupas cadastradas</h2>
- <p><a href="/roupas/novo/">Cadastrar nova roupa</a></p>
- 
- {% if roupas %}
-     <ul>
-     {% for roupa in roupas %}
-         <li>
-             <a href="/roupas/{{ roupa.id }}/">{{ roupa.modelo }}</a>
-             
-             - {{ roupa.tamanho }}
+<section class="page-shell">
+  <div class="page-header">
+    <div>
+      <p class="section-kicker">Cadastro de produtos</p>
+      <h1>Estoque</h1>
+    </div>
+    <a href="/roupas/novo/" class="btn-primary">+ Nova peça</a>
+  </div>
 
-             {% if roupa.quantidade > 0  %}
-                - Disponível -
-             {% else %}  
-                - Indisponível - 
-             {% endif %}
-
-
-             <!-- Formulário e Botão de Excluir -->
-             <form action="/roupas/{{ roupa.id }}/excluir/" method="POST" style="display:inline;">
-                 {% csrf_token %}
-                 <button type="submit" onclick="return confirm('Tem certeza que deseja excluir {{ roupa.modelo }}?');">
-                     Excluir
-                 </button>
-             </form>
-         </li>
-     {% endfor %}
-     </ul>
- {% else %}
-     <p>Nenhuma roupa cadastrada ainda.</p>
- {% endif %}
-
+  {% if roupas %}
+  <div class="table-wrap panel-soft">
+    <table>
+      <thead>
+        <tr>
+          <th>Modelo</th>
+          <th>Categoria</th>
+          <th>Cor</th>
+          <th>Tamanho</th>
+          <th>Quantidade</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for roupa in roupas %}
+        <tr>
+          <td>{{ roupa.modelo }}</td>
+          <td>{{ roupa.categoria }}</td>
+          <td>{{ roupa.cor }}</td>
+          <td>{{ roupa.tamanho }}</td>
+          <td>{{ roupa.quantidade }}</td>
+          <td>
+            {% if roupa.quantidade > 0 %}
+              <span class="status success">Disponível</span>
+            {% else %}
+              <span class="status neutral">Indisponível</span>
+            {% endif %}
+          </td>
+          <td class="row-actions">
+            <div class="row-action-group">
+              <a href="/roupas/{{ roupa.id }}/editar/" class="btn-edit"><span class="action-icon">✎</span>Editar</a>
+              <form action="/roupas/{{ roupa.id }}/excluir/" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn-danger" onclick="return confirm('Deseja excluir {{ roupa.modelo }}?');"><span class="action-icon">⌫</span>Excluir</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">Nenhuma roupa cadastrada ainda.</div>
+  {% endif %}
+</section>
 {% endblock %}
