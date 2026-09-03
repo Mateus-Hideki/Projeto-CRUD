@@ -22,11 +22,6 @@ A interface foi pensada para uma apresentação de CRUD em estilo premium, com p
 
 ## Como rodar o projeto
 
-### 1) Entrar na pasta do repositório
-
-```powershell
-cd "C:\Users\Kaio Damasceno\Documents\GitHub\Projeto-CRUD"
-```
 
 ### 2) Ativar o ambiente virtual
 
