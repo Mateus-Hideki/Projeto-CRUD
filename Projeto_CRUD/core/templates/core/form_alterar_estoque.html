@@ -1,0 +1,24 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Alterar estoque | BLOOM{% endblock %}
+
+{% block content %}
+<section class="form-shell">
+  <div class="form-card">
+    <div class="form-header">
+      <div>
+        <p class="section-kicker">Controle de estoque</p>
+        <h2>Alterar estoque</h2>
+        <p class="form-intro">{{ roupa.modelo }} · Estoque atual: <strong>{{ roupa.quantidade }}</strong></p>
+      </div>
+      <a href="{% url 'lista_roupas' %}" class="btn-ghost">Voltar</a>
+    </div>
+
+    <form method="post" class="styled-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn-primary">Confirmar alteração</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

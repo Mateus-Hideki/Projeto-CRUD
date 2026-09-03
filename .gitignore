@@ -1,0 +1,20 @@
+# Ambientes virtuais e arquivos locais
+.venv/
+venv/
+.env
+
+# Banco de dados local
+Projeto_CRUD/db.sqlite3
+
+# Arquivos gerados pelo Python/Django
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Configurações e arquivos do editor
+.vscode/
+.idea/
+
+# Builds do frontend
+frontend/node_modules/
+frontend/dist/

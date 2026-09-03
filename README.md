@@ -17,45 +17,98 @@ A interface foi pensada para uma apresentação de CRUD em estilo premium, com p
 ## Requisitos
 
 - Python 3.10+
-- Django 5+
 - SQLite (incluído no projeto)
 
-## Como rodar o projeto
+## Como rodar na sua máquina
 
-### 1) Entrar na pasta do repositório
+### 1) Baixar o projeto
 
-```powershell
-cd "C:\Users\Kaio Damasceno\Documents\GitHub\Projeto-CRUD"
+Instale o Git e o Python 3.10 ou superior. Depois, clone o repositório usando a URL do projeto:
+
+```bash
+git clone <URL_DO_REPOSITORIO>
+cd <PASTA_DO_PROJETO>
 ```
 
-### 2) Ativar o ambiente virtual
+Se o projeto já estiver baixado, abra um terminal na pasta raiz dele. `<PASTA_DO_PROJETO>` representa o nome da pasta criada pelo clone.
+
+### 2) Criar um ambiente virtual próprio
+
+Cada pessoa deve criar seu próprio ambiente virtual. Não copie a pasta `.venv` de outra máquina.
+
+Windows PowerShell:
 
 ```powershell
+python -m venv .venv
 . .\.venv\Scripts\Activate.ps1
 ```
 
-### 3) Entrar na pasta do projeto Django
+macOS/Linux:
 
-```powershell
-cd Projeto_CRUD
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
-### 4) Aplicar as migrações do banco
+Caso o PowerShell bloqueie a ativação, execute o comando abaixo apenas na sessão atual e tente ativar novamente:
 
 ```powershell
+Set-ExecutionPolicy -Scope Process Bypass
+```
+
+### 3) Instalar as dependências
+
+```bash
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
+
+### 4) Entrar na pasta do projeto Django
+
+```bash
+cd <PASTA_DO_DJANGO>
+```
+
+Neste projeto, `<PASTA_DO_DJANGO>` é a pasta que contém o arquivo `manage.py`.
+
+### 5) Preparar o banco de dados
+
+```bash
 python manage.py migrate
 ```
 
-### 5) Iniciar o servidor local
+Esse comando cria ou atualiza o banco SQLite local da pessoa que está executando o projeto. As migrações necessárias já estão incluídas no repositório.
 
-```powershell
-python manage.py runserver 0.0.0.0:8000
+Não execute `makemigrations` apenas para iniciar o projeto. Use esse comando somente depois de alterar os models:
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
 ```
 
-### 6) Acessar a interface do CRUD
+### 6) Iniciar o servidor local
 
-```text
-http://127.0.0.1:8000/
+```bash
+python manage.py runserver
+```
+
+Abra no navegador o endereço exibido pelo Django, normalmente `http://127.0.0.1:8000/`.
+
+## Acesso ao sistema e painel administrativo
+
+O sistema não possui cadastro de usuários. Todas as telas do estoque exigem login e somente o superusuário pode acessar e alterar os dados.
+
+O projeto cria automaticamente um usuário de demonstração ao executar `migrate` pela primeira vez:
+
+- Usuário: `admin`
+- Senha: `admin12345`
+
+Depois, acesse a rota `/login/`. Após o login, o sistema abre o controle de estoque. O painel técnico do Django fica na rota `/admin/`.
+
+Esse usuário e essa senha são apenas para demonstração local. Em produção, troque a senha ou crie outro superusuário com:
+
+```bash
+python manage.py createsuperuser
 ```
 
 ## Fluxo principal do CRUD
@@ -66,29 +119,13 @@ http://127.0.0.1:8000/
 - `/modelos/` - lista de modelos
 - `/categorias/` - lista de categorias
 
-## Painel administrativo do Django
-
-O projeto também possui o painel padrão do Django, mas ele fica em uma rota separada:
-
-```text
-http://127.0.0.1:8000/admin/
-```
-
-Para acessar esse painel, é necessário criar um superusuário:
-
-```powershell
-python manage.py createsuperuser
-```
-
-Importante: a interface principal do projeto para apresentação e uso do CRUD é a página `/`, e não o painel `/admin/`.
-
 ## Observações
 
 - O projeto usa SQLite, então nenhum serviço externo é necessário.
-- O ambiente virtual já está configurado na pasta `.venv` do projeto.
+- O ambiente virtual e o banco SQLite devem ser criados localmente por cada pessoa e não devem ser enviados ao repositório.
 - A pasta `frontend/` é opcional e não é obrigatória para rodar o CRUD principal.
 - O React foi criado como complemento visual, mas a aplicação funcional e principal é a interface do Django.
-- Caso tenha problemas ao rodar, confirme se o terminal está na pasta correta e se o ambiente virtual foi ativado.
+- Os comandos devem ser executados a partir da pasta que contém o `manage.py`.
 
 ## Estrutura principal
 

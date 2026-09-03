@@ -15,14 +15,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf import settings
-from django.contrib import admin
 from django.urls import include, path, re_path
 from django.views.static import serve
 
+from core.admin_site import admin_site
 from core.views import react_frontend
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin_site.urls),
     path('', include('core.urls')),
     re_path(r'^assets/(?P<path>.*)$', serve, {'document_root': settings.BASE_DIR.parent / 'frontend' / 'dist' / 'assets'}),
     re_path(r'^favicon\.svg$', serve, {'document_root': settings.BASE_DIR.parent / 'frontend' / 'dist'}),

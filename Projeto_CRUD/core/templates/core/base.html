@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{% block title %}Noir Studio{% endblock %}</title>
+    <title>{% block title %}BLOOM{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'core/css/styles.css' %}" />
   </head>
   <body>
@@ -21,14 +21,25 @@
 
     <header class="site-header">
       <div class="container nav-wrap">
-        <a href="/" class="brand">Noir</a>
+        <a href="{% url 'inicio' %}" class="brand">BLOOM</a>
         <nav class="main-nav" aria-label="Menu principal">
-          <a href="/" class="nav-link"><span class="nav-icon">⌂</span>Início</a>
-          <a href="/roupas/" class="nav-link"><span class="nav-icon">◫</span>Roupas</a>
-          <a href="/modelos/" class="nav-link"><span class="nav-icon">◌</span>Modelos</a>
-          <a href="/categorias/" class="nav-link"><span class="nav-icon">◍</span>Categorias</a>
+          <a href="{% url 'inicio' %}" class="nav-link{% if request.resolver_match.url_name == 'inicio' %} active{% endif %}"{% if request.resolver_match.url_name == 'inicio' %} aria-current="page"{% endif %}>Início</a>
+          <a href="{% url 'lista_roupas' %}" class="nav-link{% if 'roupa' in request.resolver_match.url_name %} active{% endif %}"{% if 'roupa' in request.resolver_match.url_name %} aria-current="page"{% endif %}>Roupas</a>
+          <a href="{% url 'lista_modelos' %}" class="nav-link{% if 'modelo' in request.resolver_match.url_name %} active{% endif %}"{% if 'modelo' in request.resolver_match.url_name %} aria-current="page"{% endif %}>Modelos</a>
+          <a href="{% url 'lista_categorias' %}" class="nav-link{% if 'categoria' in request.resolver_match.url_name %} active{% endif %}"{% if 'categoria' in request.resolver_match.url_name %} aria-current="page"{% endif %}>Categorias</a>
         </nav>
-        <a href="/roupas/novo/" class="nav-action"><span class="nav-icon">＋</span>Cadastrar peça</a>
+        <div class="nav-tools">
+          {% if user.is_superuser %}<a href="{% url 'criar_roupa' %}" class="nav-action">Cadastrar peça</a>{% endif %}
+          {% if user.is_superuser %}
+            <a href="{% url 'admin:index' %}" class="admin-link">Painel Admin</a>
+            <form action="{% url 'logout' %}" method="post" class="logout-form">
+              {% csrf_token %}
+              <button type="submit" class="admin-link logout-button">Sair</button>
+            </form>
+          {% else %}
+            <a href="{% url 'login' %}" class="admin-link">Entrar</a>
+          {% endif %}
+        </div>
       </div>
     </header>
 
@@ -37,10 +48,10 @@
     <footer class="site-footer">
       <div class="container footer-inner">
         <div>
-          <div class="footer-brand">Noir</div>
+          <div class="footer-brand">BLOOM</div>
           <p>Estilo essencial para o dia a dia.</p>
         </div>
-        <div>© 2026 Noir Studio</div>
+        <div>© 2026 BLOOM</div>
       </div>
     </footer>
 

@@ -9,7 +9,7 @@
       <p class="section-kicker">Cadastro de categorias</p>
       <h1>Categorias</h1>
     </div>
-    <a href="/categorias/novo/" class="btn-primary">Nova categoria</a>
+    {% if user.is_superuser %}<a href="/categorias/novo/" class="btn-primary">Nova categoria</a>{% endif %}
   </div>
 
   {% if categorias %}
@@ -18,14 +18,14 @@
       <thead>
         <tr>
           <th>Categoria</th>
-          <th>Ações</th>
+          {% if user.is_superuser %}<th>Ações</th>{% endif %}
         </tr>
       </thead>
       <tbody>
         {% for categoria in categorias %}
         <tr>
           <td>{{ categoria.categoria }}</td>
-          <td class="row-actions">
+          {% if user.is_superuser %}<td class="row-actions">
             <div class="row-action-group">
               <a href="/categorias/{{ categoria.id }}/editar/" class="btn-edit"><span class="action-icon">✎</span>Editar</a>
               <form action="/categorias/{{ categoria.id }}/excluir/" method="POST">
@@ -33,7 +33,7 @@
                 <button type="submit" class="btn-danger" onclick="return confirm('Tem certeza que deseja excluir {{ categoria.categoria }}?');"><span class="action-icon">⌫</span>Excluir</button>
               </form>
             </div>
-          </td>
+          </td>{% endif %}
         </tr>
         {% endfor %}
       </tbody>

@@ -9,7 +9,7 @@
       <p class="section-kicker">Cadastro de modelos</p>
       <h1>Modelos</h1>
     </div>
-    <a href="/modelos/novo/" class="btn-primary">Novo modelo</a>
+    {% if user.is_superuser %}<a href="/modelos/novo/" class="btn-primary">Novo modelo</a>{% endif %}
   </div>
 
   {% if modelos %}
@@ -19,7 +19,7 @@
         <tr>
           <th>Modelo</th>
           <th>Categoria</th>
-          <th>Ações</th>
+          {% if user.is_superuser %}<th>Ações</th>{% endif %}
         </tr>
       </thead>
       <tbody>
@@ -27,7 +27,7 @@
         <tr>
           <td>{{ modelo.modelo }}</td>
           <td>{{ modelo.categoria }}</td>
-          <td class="row-actions">
+          {% if user.is_superuser %}<td class="row-actions">
             <div class="row-action-group">
               <a href="/modelos/{{ modelo.id }}/editar/" class="btn-edit"><span class="action-icon">✎</span>Editar</a>
               <form action="/modelos/{{ modelo.id }}/excluir/" method="POST">
@@ -35,7 +35,7 @@
                 <button type="submit" class="btn-danger" onclick="return confirm('Tem certeza que deseja excluir {{ modelo.modelo }}?');"><span class="action-icon">⌫</span>Excluir</button>
               </form>
             </div>
-          </td>
+          </td>{% endif %}
         </tr>
         {% endfor %}
       </tbody>

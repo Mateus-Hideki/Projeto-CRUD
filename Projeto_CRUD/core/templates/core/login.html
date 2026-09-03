@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Entrar | BLOOM{% endblock %}
+
+{% block content %}
+<section class="form-shell">
+  <div class="form-card">
+    <p class="section-kicker">Área restrita</p>
+    <h1>Entrar no painel</h1>
+    <p class="form-intro">Acesse o painel administrativo para gerenciar o catálogo.</p>
+    <form method="post" class="styled-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn-primary">Entrar</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

@@ -9,7 +9,7 @@
       <p class="section-kicker">Cadastro de produtos</p>
       <h1>Estoque</h1>
     </div>
-    <a href="/roupas/novo/" class="btn-primary">+ Nova peça</a>
+    {% if user.is_superuser %}<a href="/roupas/novo/" class="btn-primary">+ Nova peça</a>{% endif %}
   </div>
 
   {% if roupas %}
@@ -23,7 +23,7 @@
           <th>Tamanho</th>
           <th>Quantidade</th>
           <th>Status</th>
-          <th>Ações</th>
+          {% if user.is_superuser %}<th>Ações</th>{% endif %}
         </tr>
       </thead>
       <tbody>
@@ -41,15 +41,16 @@
               <span class="status neutral">Indisponível</span>
             {% endif %}
           </td>
-          <td class="row-actions">
+          {% if user.is_superuser %}<td class="row-actions">
             <div class="row-action-group">
+              <a href="{% url 'alterar_estoque' roupa.id %}" class="btn-stock">Alterar estoque</a>
               <a href="/roupas/{{ roupa.id }}/editar/" class="btn-edit"><span class="action-icon">✎</span>Editar</a>
               <form action="/roupas/{{ roupa.id }}/excluir/" method="POST">
                 {% csrf_token %}
                 <button type="submit" class="btn-danger" onclick="return confirm('Deseja excluir {{ roupa.modelo }}?');"><span class="action-icon">⌫</span>Excluir</button>
               </form>
             </div>
-          </td>
+          </td>{% endif %}
         </tr>
         {% endfor %}
       </tbody>
